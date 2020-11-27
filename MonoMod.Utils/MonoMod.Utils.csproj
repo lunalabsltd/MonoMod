@@ -12,6 +12,7 @@
     <TargetFrameworks>net45</TargetFrameworks>
     <Configurations>Debug;Release;DebugLegacy;ReleaseLegacy;DebugTrace;ReleaseTrace</Configurations>
     <OutputType>Library</OutputType>
+    <DefineConstants>LUNA_REPLAY</DefineConstants>
   </PropertyGroup>
   <Import Project="..\MonoMod.Common.props" />
 
