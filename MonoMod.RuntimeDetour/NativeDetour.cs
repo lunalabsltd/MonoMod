@@ -234,7 +234,9 @@ namespace MonoMod.RuntimeDetour {
 
             MethodBase methodCallable = Method;
             if (methodCallable == null) {
+                _Pinned.Add(signature.Pin());
                 methodCallable = DetourHelper.GenerateNativeProxy(Data.Method, signature);
+                _Pinned.Add(methodCallable.Pin());
             }
 
             Type returnType = (signature as MethodInfo)?.ReturnType ?? typeof(void);
@@ -306,7 +308,9 @@ namespace MonoMod.RuntimeDetour {
                 eh.HandlerStart = il.Body.Instructions[instriTryEnd];
                 eh.HandlerEnd = il.Body.Instructions[instriFinallyEnd];
 
-                return dmd.Generate();
+                var trampoline = dmd.Generate();
+                _Pinned.Add(trampoline.Pin());
+                return trampoline;
             }
         }
 
